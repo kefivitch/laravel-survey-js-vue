@@ -1,0 +1,41 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "@inertiajs/inertia": "^0.9.0",
+        "@inertiajs/inertia-vue3": "^0.4.0",
+        "@inertiajs/progress": "^0.2.4",
+        "@vue/compiler-sfc": "^3.0.5",
+        "autoprefixer": "^10.2.4",
+        "axios": "^0.21",
+        "bootstrap": "^5.0.2",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "postcss": "^8.2.13",
+        "postcss-import": "^14.0.1",
+        "vue": "^3.0.5",
+        "vue-loader": "^16.1.2"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.10.1",
+        "ckeditor": "^4.12.1",
+        "core-js": "^3.18.0",
+        "jquery": "^3.6.0",
+        "jspdf": "^2.4.0",
+        "jspdf-autotable": "^3.5.20",
+        "survey-analytics": "^1.8.68",
+        "survey-creator": "^1.8.68",
+        "survey-pdf": "^1.8.68",
+        "survey-vue": "^1.8.68",
+        "surveyjs-widgets": "^1.8.68",
+        "xlsx": "^0.17.2"
+    }
+}
