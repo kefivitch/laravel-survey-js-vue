@@ -4,54 +4,28 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
-            <h2 class="pb-4">Surveys List</h2>
+            <h2 class="pb-4">Results List of {{ $page.props.survey_name }}</h2>
           </div>
-
-          <div class="col-md-2 ms-auto">
-            <button type="button" class="btn btn-dark">
-              Create new Survey
-            </button>
-          </div>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-          <symbol
-            id="check-circle-fill"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
-            />
-          </symbol>
-        </svg>
-        <div class="alert alert-success d-flex align-items-center" role="alert" v-if="msg.length > 0">
-          <svg
-            class="bi flex-shrink-0 me-2"
-            width="24"
-            height="24"
-            role="img"
-            aria-label="Success:"
-          >
-            <use xlink:href="#check-circle-fill" />
-          </svg>
-          <div>{{ msg }}</div>
         </div>
         <div class="">
           <table class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Name</th>
+                <th scope="col">IP Address</th>
+                <th scope="col">User</th>
                 <th scope="col">Created date</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="survey in surveys" :key="survey.id">
+              <tr v-for="survey in results" :key="survey.id">
                 <td>{{ survey.id }}</td>
                 <td>
-                  {{ survey.name }}
-                  <small style="font-size: small">({{ survey.slug }})</small>
+                  {{ survey.ip_address }}
+                </td>
+                <td>
+                  {{ survey.user.name }}
                 </td>
                 <td>{{ survey.created_at }}</td>
 
@@ -71,17 +45,12 @@
                         <a class="dropdown-item" href="#">Run Survey</a>
                       </li>
                       <li>
-                        <inertia-link
-                          class="dropdown-item"
-                          :href="route('results', { survey_id: survey.id })"
-                          >Show Results</inertia-link
-                        >
-                        <!--<a class="" href="#">Get Results</a>-->
+                        <a class="dropdown-item" href="#">Get Results</a>
                       </li>
                       <li>
                         <a class="dropdown-item" href="#">Edit Survey</a>
                       </li>
-                      <li @click="deleteItem(survey)">
+                      <li>
                         <a class="dropdown-item bg-danger text-white" href="#"
                           >Delete Survey</a
                         >
@@ -136,46 +105,44 @@ export default {
   components: { BootstrapAuthenticatedLayout },
   data() {
     return {
-      surveys: [],
+      results: [],
       page: 1,
       pageLength: 1,
       dialog: false,
       loading: false,
-      msg: "",
+      formTitle: "New Survey",
       editedItem: {
         name: "",
       },
     };
   },
   mounted() {
-    this.getSurveys();
+    this.getResults();
   },
   watch: {
     page() {
-      this.getSurveys();
+      this.getResults();
     },
   },
   methods: {
-    getSurveys() {
+    getResults() {
       this.loading = true;
+
       axios
-        .get("api/survey", {
-          params: {
-            page: this.page,
-          },
-        })
+        .get("/api/survey/" + this.$page.props.survey_id + "/result?page=" + this.page)
         .then((response) => {
-          if (response.status === 200) {
-            this.surveys = response.data.data;
-            this.pageLength = Math.ceil(
-              response.data.meta.total / response.data.meta.per_page
-            );
-            this.loading = false;
-          }
+          this.results = response.data.data;
+          this.survey = response.data.meta.survey;
+          this.pageLength = Math.ceil(
+            response.data.meta.total / response.data.meta.per_page
+          );
+          this.loading = false;
+          this.surveyData = new SurveyVue.Model(response.data.meta.survey.json);
+          this.surveyData.mode = "display";
         })
         .catch((error) => {
-          this.loading = false;
           console.info(error.response);
+          this.loading = false;
         });
     },
     editItem(id) {
@@ -184,16 +151,14 @@ export default {
     deleteItem(item) {
       if (confirm("Are you sure you want to delete this survey?")) {
         this.snackbar = true;
-        axios.delete("/api/survey/" + item.id).then((response) => {
+        axios.delete("/survey/" + item.id).then((response) => {
           if (response.status === 200) {
-            console.log(response.data.message);
-            this.msg = response.data.message;
-            setTimeout(() => {
-                this.msg = "";
-            },3000);
-            this.getSurveys();
+            this.$root.snackbarMsg = response.data.message;
+            this.$root.snackbar = true;
           }
         });
+        const index = this.results.indexOf(item);
+        this.results.splice(index, 1);
       }
     },
     onCloseModal() {
@@ -215,7 +180,7 @@ export default {
           this.$root.snackbarMsg = response.data.message;
           this.$root.snackbar = true;
           this.editedItem = Object.assign({}, { name: "" });
-          this.getSurveys();
+          this.getResults();
         }
       });
     },

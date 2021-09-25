@@ -1,20 +1,68 @@
 <template>
   <bootstrap-authenticated-layout>
-      <survey-creator></survey-creator>
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="row">
+          <div class="mb-3">
+            <label for="exampleInputSurvey" class="form-label"
+              >Survey Name</label
+            >
+            <input
+              type="survey"
+              class="form-control"
+              id="exampleInputSurvey"
+              aria-describedby="surveyHelp"
+              v-model="name"
+            />
+            <div id="surveyHelp" class="form-text">
+              We'll use this name to list the surveys.
+            </div>
+          </div>
+        </div>
+        <button
+          @click="saveSurvey"
+          class="btn btn-primary"
+          :class="loading ? 'disabled' : ''"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
   </bootstrap-authenticated-layout>
 </template>
 
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
-import SurveyCreator from "../components/SurveyCreator";
 // import "bootstrap/dist/css/bootstrap.css";
 export default {
   components: {
     BootstrapAuthenticatedLayout,
-    SurveyCreator,
   },
   data() {
-    return {};
+    return {
+      loading: false,
+      name: "",
+    };
+  },
+  methods: {
+    saveSurvey() {
+      this.loading = true;
+      let data = {
+        name: this.name,
+        json: {
+          pages: [],
+        },
+      };
+      axios.post("api/survey", data).then((response) => {
+        if (response.status === 201) {
+          this.dialog = false;
+          this.loading = false;
+          this.$root.snackbarMsg = response.data.message;
+          this.$root.snackbar = true;
+          this.editedItem = Object.assign({}, { name: "" });
+        }
+      });
+    },
   },
 };
 </script>

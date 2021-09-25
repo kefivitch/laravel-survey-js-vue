@@ -134,9 +134,9 @@
                     });
             },
             showSurvey(result) {
-                this.dialog = true;
-                this.surveyData.data = result.json;
-               }
+              this.dialog = true;
+              this.surveyData.data = result.json;
+            }
         }
     }
 </script>

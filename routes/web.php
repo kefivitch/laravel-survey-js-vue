@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Survey;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,9 +32,18 @@ Route::get('/dashboard', function () {
 Route::get('/surveys', function () {
     return Inertia::render('Surveys');
 })->middleware(['auth', 'verified'])->name('surveys');
+Route::get('/results/{survey_id}', function ($survey_id) {
+
+    return Inertia::render('Results', [
+        'survey_id' => $survey_id,
+        'survey_name' => Survey::find($survey_id)->name,
+    ]);
+})->middleware(['auth', 'verified'])->name('results');
+
 Route::get('/create-survey', function () {
     return Inertia::render('CreateSurvey');
 })->middleware(['auth', 'verified'])->name('create-survey');
+
 Route::get('/build-survey', function () {
     return Inertia::render('BuildSurvey');
 })->middleware(['auth', 'verified'])->name('build-survey');

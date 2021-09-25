@@ -42,7 +42,8 @@
             </div>
         </nav>
 
-        <div :class="$page.url === '/create-survey' ? '' : 'container'">
+        <!--<div :class="$page.url === '/create-survey' ? '' : 'container'">-->
+        <div class="container">
             <slot />
         </div>
     </div>

@@ -48,6 +48,7 @@ SurveyCreator.SurveyPropertyModalEditor.registerCustomWidget(
 
 export default {
   name: "survey-creator",
+  props: ["json"],
   data() {
     return {};
   },
@@ -63,6 +64,7 @@ export default {
       options
     );
     let self = this;
+    //this.surveyCreator.text = JSON.stringify(this.json);
     this.surveyCreator.saveSurveyFunc = function() {
       axios
         .put("api/survey", { json: JSON.parse(this.text) })

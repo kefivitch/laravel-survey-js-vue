@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyResult extends Model
 {
-    protected $table = 'survey_results';
+    protected $table = 'surveys_results';
     protected $fillable = [
         'survey_id', 'user_id', 'ip_address', 'json',
     ];
