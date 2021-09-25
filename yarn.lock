@@ -8037,7 +8037,7 @@ survey-creator@^1.8.68:
     knockout "^3.5.0"
     survey-knockout "^1.8.68"
 
-survey-knockout@^1.8.68:
+survey-knockout@^1.1.25, survey-knockout@^1.8.68:
   version "1.8.68"
   resolved "https://registry.yarnpkg.com/survey-knockout/-/survey-knockout-1.8.68.tgz#1f405531add642762ad28adbcfecd553a975fec8"
   integrity sha512-axilS0KRf+2l/QQGB0kIG1YgsdUIl12S8RW1E/Inx1+zfjo+ywt5+nLRNo3ZxB1U9c/YWpIBnxYLSC69wGjWLw==
@@ -8058,6 +8058,14 @@ survey-vue@^1.8.68:
   integrity sha512-4bum7wp12DbfriOo209CoaRYv/V0brevMWajTUpetoS+ntw3JC2qitpMwcANE0OO1zYI2j8Vm2rArEIOEuaFtQ==
   dependencies:
     vue "^2.1.10"
+
+surveyjs-editor@^1.1.25:
+  version "1.1.25"
+  resolved "https://registry.yarnpkg.com/surveyjs-editor/-/surveyjs-editor-1.1.25.tgz#000e29af2cc690050d11b3d38c9907b8b006e7dc"
+  integrity sha512-OqYR2LSn64uINp1Tp5m0DZ9w5vrqmrb15NM9sc8NznLJgASWb95ZD5l0lQVjvifuNWNF55CxIVfdQxP7lsjMSw==
+  dependencies:
+    knockout "^3.5.0"
+    survey-knockout "^1.1.25"
 
 surveyjs-widgets@^1.8.68:
   version "1.8.68"

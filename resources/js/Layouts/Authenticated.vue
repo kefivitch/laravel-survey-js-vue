@@ -15,6 +15,9 @@
                             <Link class="nav-link" :class="{ 'active': $page.url === '/dashboard' }" aria-current="page" :href="route('dashboard')">Dashboard</Link>
                         </li>
                         <li class="nav-item">
+                            <Link class="nav-link" :class="{ 'active': $page.url === '/surveys' }" aria-current="page" :href="route('surveys')">Surveys List</Link>
+                        </li>
+                        <li class="nav-item">
                             <Link class="nav-link" :class="{ 'active': $page.url === '/create-survey' }" aria-current="page" :href="route('create-survey')">Create Survey</Link>
                         </li>
                     </ul>
@@ -39,7 +42,7 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div :class="$page.url === '/create-survey' ? '' : 'container'">
             <slot />
         </div>
     </div>

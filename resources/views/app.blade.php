@@ -23,5 +23,8 @@
         @env ('local')
             <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
         @endenv
+        <script>
+            window.SurveyConfig = {!! json_encode(config('survey-manager')) !!};
+        </script>
     </body>
 </html>

@@ -28,8 +28,14 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/surveys', function () {
+    return Inertia::render('Surveys');
+})->middleware(['auth', 'verified'])->name('surveys');
 Route::get('/create-survey', function () {
     return Inertia::render('CreateSurvey');
 })->middleware(['auth', 'verified'])->name('create-survey');
+Route::get('/build-survey', function () {
+    return Inertia::render('BuildSurvey');
+})->middleware(['auth', 'verified'])->name('build-survey');
 
 require __DIR__.'/auth.php';
