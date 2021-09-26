@@ -145,9 +145,6 @@ export default {
           this.loading = false;
         });
     },
-    editItem(id) {
-      this.$router.push({ name: "editor", params: { id: id } });
-    },
     deleteItem(item) {
       if (confirm("Are you sure you want to delete this survey?")) {
         this.snackbar = true;
@@ -161,34 +158,8 @@ export default {
         this.results.splice(index, 1);
       }
     },
-    onCloseModal() {
-      this.dialog = false;
-      this.editedItem = Object.assign({}, { name: "" });
-    },
-    onSaveModal(name) {
-      this.loading = true;
-      let data = {
-        name: name,
-        json: {
-          pages: [],
-        },
-      };
-      axios.post("/survey", data).then((response) => {
-        if (response.status === 201) {
-          this.dialog = false;
-          this.loading = false;
-          this.$root.snackbarMsg = response.data.message;
-          this.$root.snackbar = true;
-          this.editedItem = Object.assign({}, { name: "" });
-          this.getResults();
-        }
-      });
-    },
     runSurvey(slug) {
       window.open("/" + SurveyConfig.route_prefix + "/" + slug, "_blank");
-    },
-    showResults(id) {
-      this.$router.push({ name: "result", params: { id: id } });
     },
   },
 };

@@ -32,13 +32,22 @@ Route::get('/dashboard', function () {
 Route::get('/surveys', function () {
     return Inertia::render('Surveys');
 })->middleware(['auth', 'verified'])->name('surveys');
-Route::get('/results/{survey_id}', function ($survey_id) {
+
+Route::get('/surveys/{survey_id}/results', function ($survey_id) {
 
     return Inertia::render('Results', [
         'survey_id' => $survey_id,
         'survey_name' => Survey::find($survey_id)->name,
     ]);
 })->middleware(['auth', 'verified'])->name('results');
+
+Route::get('/surveys/{survey_id}', function ($survey_id) {
+
+    return Inertia::render('BuildSurvey', [
+        'survey' => Survey::findOrFail($survey_id),
+        'is_creator' => true,
+    ]);
+})->middleware(['auth', 'verified'])->name('survey');
 
 Route::get('/create-survey', function () {
     return Inertia::render('CreateSurvey');

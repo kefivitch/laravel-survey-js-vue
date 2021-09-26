@@ -42,8 +42,8 @@
             </div>
         </nav>
 
-        <!--<div :class="$page.url === '/create-survey' ? '' : 'container'">-->
-        <div class="container">
+        <div :class="$page.props.is_creator ? '' : 'container'">
+        <!--<div class="container">-->
             <slot />
         </div>
     </div>

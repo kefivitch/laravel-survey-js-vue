@@ -8,9 +8,9 @@
           </div>
 
           <div class="col-md-2 ms-auto">
-            <button type="button" class="btn btn-dark">
+            <Link href="/create-survey" as="button" type="button" class="btn btn-dark" >
               Create new Survey
-            </button>
+            </Link>
           </div>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
@@ -37,7 +37,7 @@
           <div>{{ msg }}</div>
         </div>
         <div class="">
-          <table class="table table-striped">
+          <table class="table table-striped table-hover">
             <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -73,13 +73,13 @@
                       <li>
                         <inertia-link
                           class="dropdown-item"
-                          :href="route('results', { survey_id: survey.id })"
+                          :href="`/surveys/${survey.id}/results`"
                           >Show Results</inertia-link
                         >
                         <!--<a class="" href="#">Get Results</a>-->
                       </li>
                       <li>
-                        <a class="dropdown-item" href="#">Edit Survey</a>
+                        <inertia-link class="dropdown-item" :href="route('survey',{survey_id: survey.id})">Edit Survey</inertia-link>
                       </li>
                       <li @click="deleteItem(survey)">
                         <a class="dropdown-item bg-danger text-white" href="#"
@@ -131,9 +131,11 @@
 
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
+import { Link } from '@inertiajs/inertia-vue3'
+
 export default {
   name: "survey-list",
-  components: { BootstrapAuthenticatedLayout },
+  components: { BootstrapAuthenticatedLayout, Link },
   data() {
     return {
       surveys: [],
@@ -186,7 +188,6 @@ export default {
         this.snackbar = true;
         axios.delete("/api/survey/" + item.id).then((response) => {
           if (response.status === 200) {
-            console.log(response.data.message);
             this.msg = response.data.message;
             setTimeout(() => {
                 this.msg = "";

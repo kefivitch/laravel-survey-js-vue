@@ -1,4 +1,27 @@
 <template>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </symbol>
+  </svg>
+  <div
+    class="alert alert-success d-flex align-items-center"
+    role="alert"
+    v-if="msg.length > 0"
+  >
+    <svg
+      class="bi flex-shrink-0 me-2"
+      width="24"
+      height="24"
+      role="img"
+      aria-label="Success:"
+    >
+      <use xlink:href="#check-circle-fill" />
+    </svg>
+    <div>{{ msg }}</div>
+  </div>
   <div id="surveyCreatorContainer"></div>
 </template>
 
@@ -26,31 +49,34 @@ customWidget(SurveyKo);
 SurveyKo.Serializer.addProperty("question", "tag:number");
 
 var CkEditor_ModalEditor = {
-  afterRender: function(modalEditor, htmlElement) {
+  afterRender: function (modalEditor, htmlElement) {
     var editor = window["CKEDITOR"].replace(htmlElement);
-    editor.on("change", function() {
+    editor.on("change", function () {
       modalEditor.editingValue = editor.getData();
     });
     editor.setData(modalEditor.editingValue);
   },
-  destroy: function(modalEditor, htmlElement) {
+  destroy: function (modalEditor, htmlElement) {
     var instance = window["CKEDITOR"].instances[htmlElement.id];
     if (instance) {
       instance.removeAllListeners();
       window["CKEDITOR"].remove(instance);
     }
-  }
+  },
 };
 SurveyCreator.SurveyPropertyModalEditor.registerCustomWidget(
   "html",
   CkEditor_ModalEditor
 );
+SurveyCreator.StylesManager.applyTheme("winterstone");
 
 export default {
   name: "survey-creator",
-  props: ["json"],
+  props: ["survey"],
   data() {
-    return {};
+    return {
+        msg: ''
+    };
   },
   mounted() {
     // CSS FIXER
@@ -64,20 +90,23 @@ export default {
       options
     );
     let self = this;
-    //this.surveyCreator.text = JSON.stringify(this.json);
-    this.surveyCreator.saveSurveyFunc = function() {
+    this.surveyCreator.text = JSON.stringify(this.survey.json);
+    this.surveyCreator.saveSurveyFunc = function () {
       axios
-        .put("api/survey", { json: JSON.parse(this.text) })
+        .put("/api/survey/" + self.survey.id, { json: JSON.parse(this.text) })
         .then((response) => {
-          self.editor.text = JSON.stringify(response.data.data.json);
-          self.$root.snackbar = true;
-          self.$root.snackbarMsg = response.data.message;
+            console.log(response.data.message)
+          self.surveyCreator.text = JSON.stringify(response.data.data.json);
+          self.msg = response.data.message;
+            setTimeout(() => {
+                self.msg = "";
+            },3000);
         })
         .catch((error) => {
           console.error(error.response);
         });
     };
-  }
+  },
 };
 </script>
 

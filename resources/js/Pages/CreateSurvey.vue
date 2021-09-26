@@ -21,7 +21,7 @@
         </div>
         <button
           @click="saveSurvey"
-          class="btn btn-primary"
+          class="btn btn-dark"
           :class="loading ? 'disabled' : ''"
         >
           Submit
@@ -33,15 +33,18 @@
 
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
+import SurveyCreator from "../components/SurveyCreator";
 // import "bootstrap/dist/css/bootstrap.css";
 export default {
   components: {
     BootstrapAuthenticatedLayout,
+    SurveyCreator,
   },
   data() {
     return {
       loading: false,
       name: "",
+      json: {}
     };
   },
   methods: {
@@ -55,6 +58,7 @@ export default {
       };
       axios.post("api/survey", data).then((response) => {
         if (response.status === 201) {
+          window.location.replace('/surveys/' + response.data.data.id);
           this.dialog = false;
           this.loading = false;
           this.$root.snackbarMsg = response.data.message;
