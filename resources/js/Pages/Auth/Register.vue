@@ -1,4 +1,5 @@
 <template>
+<div>
     <breeze-validation-errors class="mb-4" />
 
     <form @submit.prevent="submit">
@@ -23,24 +24,27 @@
         </div>
 
         <div class="float-end">
-            <inertia-link :href="route('login')" class="text-dark">Already registered?</inertia-link>
+            <Link :href="'/login'" class="text-dark">Already registered?</Link>
             <button type="submit" class="btn btn-dark ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Register
             </button>
         </div>
 
     </form>
+</div>
 </template>
 
 <script>
     import BreezeGuestLayout from "@/Layouts/Guest"
     import BreezeValidationErrors from '@/Components/ValidationErrors'
+    import { Link } from '@inertiajs/inertia-vue'
 
     export default {
         layout: BreezeGuestLayout,
 
         components: {
             BreezeValidationErrors,
+            Link
         },
 
         data() {
@@ -57,7 +61,7 @@
 
         methods: {
             submit() {
-                this.form.post(this.route('register'), {
+                this.form.post('/register', {
                     onFinish: () => this.form.reset('password', 'password_confirmation'),
                 })
             }

@@ -49,6 +49,13 @@ Route::get('/surveys/{survey_id}', function ($survey_id) {
     ]);
 })->middleware(['auth', 'verified'])->name('survey');
 
+Route::get('/surveys/{survey_slug}/show', function ($survey_slug) {
+
+    return Inertia::render('SurveyShow', [
+        'survey' => Survey::where('slug',$survey_slug)->firstOrFail(),
+    ]);
+})->middleware(['auth', 'verified'])->name('survey-show');
+
 Route::get('/create-survey', function () {
     return Inertia::render('CreateSurvey');
 })->middleware(['auth', 'verified'])->name('create-survey');

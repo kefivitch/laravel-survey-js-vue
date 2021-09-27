@@ -2,16 +2,16 @@
     <div class="position-absolute top-0 min-vh-100 min-vw-100 bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
             <div class="container-fluid">
-                <inertia-link :href="route('dashboard')" class="navbar-brand">
+                <Link :href="'/dashboard'" class="navbar-brand">
                     <breeze-application-logo style="width: 30px;" />
-                </inertia-link>
+                </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item" v-if="$page.props.auth.user">
-                            <inertia-link class="nav-link active" aria-current="page" :href="route('dashboard')">Dashboard</inertia-link>
+                            <Link class="nav-link active" aria-current="page" href='/dashboard'>Dashboard</Link>
                         </li>
                     </ul>
 
@@ -24,19 +24,19 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li>
-                                        <inertia-link class="dropdown-item" :href="route('logout')" method="post">
+                                        <Link class="dropdown-item" href="/logout" method="post">
                                             Log Out
-                                        </inertia-link>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                             <li v-else class="nav-item">
-                                <inertia-link class="nav-link d-inline-block" :href="route('login')">
+                                <Link class="nav-link d-inline-block" :href="'/login'">
                                     Log In
-                                </inertia-link>
-                                <inertia-link class="nav-link d-inline-block" :href="route('register')">
+                                </Link>
+                                <Link class="nav-link d-inline-block" :href="'/register'">
                                     Register
-                                </inertia-link>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -139,31 +139,32 @@
 </template>
 
 <script>
-    import BreezeApplicationLogo from '@/Components/ApplicationLogo'
-
-    export default {
-        props: {
-            canLogin: Boolean,
-            canRegister: Boolean,
-            laravelVersion: String,
-            phpVersion: String,
-        },
-        components: {
-            BreezeApplicationLogo,
-        },
-    }
+import BreezeApplicationLogo from "@/Components/ApplicationLogo";
+import { Link } from "@inertiajs/inertia-vue";
+export default {
+  props: {
+    canLogin: Boolean,
+    canRegister: Boolean,
+    laravelVersion: String,
+    phpVersion: String,
+  },
+  components: {
+    BreezeApplicationLogo,
+    Link,
+  },
+};
 </script>
 
 <style scoped>
-    .w-5 {
-        width: 5%!important;
-    }
+.w-5 {
+  width: 5% !important;
+}
 
-    .w-10 {
-        width: 10%!important;
-    }
+.w-10 {
+  width: 10% !important;
+}
 
-    .w-20 {
-        width: 20%!important;
-    }
+.w-20 {
+  width: 20% !important;
+}
 </style>

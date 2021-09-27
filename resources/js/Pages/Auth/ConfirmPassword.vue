@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="mb-4 text-sm text-muted">
         This is a secure area of the application. Please confirm your password before continuing.
     </div>
@@ -17,6 +18,7 @@
             </button>
         </div>
     </form>
+</div>
 </template>
 
 <script>

@@ -26,5 +26,8 @@
         <script>
             window.SurveyConfig = {!! json_encode(config('survey-manager')) !!};
         </script>
+        <script>
+            
+          </script>
     </body>
 </html>

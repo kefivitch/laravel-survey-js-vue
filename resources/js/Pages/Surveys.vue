@@ -8,7 +8,16 @@
           </div>
 
           <div class="col-md-2 ms-auto">
-            <Link href="/create-survey" as="button" type="button" class="btn btn-dark" >
+            <Link
+              href="/create-survey"
+              as="button"
+              type="button"
+              class="btn btn-dark"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
               Create new Survey
             </Link>
           </div>
@@ -24,7 +33,11 @@
             />
           </symbol>
         </svg>
-        <div class="alert alert-success d-flex align-items-center" role="alert" v-if="msg.length > 0">
+        <div
+          class="alert alert-success d-flex align-items-center"
+          role="alert"
+          v-if="msg.length > 0"
+        >
           <svg
             class="bi flex-shrink-0 me-2"
             width="24"
@@ -68,18 +81,22 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <a class="dropdown-item" href="#">Run Survey</a>
+                        <a class="dropdown-item" target="_blank" :href="`/surveys/${survey.slug}/show`" >Run Survey</a>
                       </li>
                       <li>
-                        <inertia-link
+                        <Link
                           class="dropdown-item"
                           :href="`/surveys/${survey.id}/results`"
-                          >Show Results</inertia-link
+                          >Show Results</Link
                         >
                         <!--<a class="" href="#">Get Results</a>-->
                       </li>
                       <li>
-                        <inertia-link class="dropdown-item" :href="route('survey',{survey_id: survey.id})">Edit Survey</inertia-link>
+                        <Link
+                          class="dropdown-item"
+                          :href="'/surveys/'+ survey.id"
+                          >Edit Survey</Link
+                        >
                       </li>
                       <li @click="deleteItem(survey)">
                         <a class="dropdown-item bg-danger text-white" href="#"
@@ -131,7 +148,7 @@
 
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
-import { Link } from '@inertiajs/inertia-vue3'
+import { Link } from "@inertiajs/inertia-vue";
 
 export default {
   name: "survey-list",
@@ -190,8 +207,8 @@ export default {
           if (response.status === 200) {
             this.msg = response.data.message;
             setTimeout(() => {
-                this.msg = "";
-            },3000);
+              this.msg = "";
+            }, 3000);
             this.getSurveys();
           }
         });

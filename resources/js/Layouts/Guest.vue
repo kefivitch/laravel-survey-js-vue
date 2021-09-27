@@ -4,9 +4,9 @@
             <div class="mt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <inertia-link href="/">
+                        <Link href="/">
                             <breeze-application-logo style="width: 100px; height: 100px;" />
-                        </inertia-link>
+                        </Link>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -26,10 +26,12 @@
 
 <script>
 import BreezeApplicationLogo from '@/Components/ApplicationLogo'
+import { Link } from '@inertiajs/inertia-vue'
 
 export default {
     components: {
         BreezeApplicationLogo,
+        Link
     }
 }
 </script>

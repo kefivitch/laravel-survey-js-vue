@@ -73,7 +73,7 @@ return [
 
         'showState'             =>  false,
 
-        'haveCommercialLicense' =>  false,
+        'haveCommercialLicense' =>  true,
     ],
 
     /*
