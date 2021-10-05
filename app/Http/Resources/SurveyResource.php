@@ -17,6 +17,7 @@ class SurveyResource extends JsonResource
         return [
             'id'            =>  $this->id,
             'name'          =>  $this->name,
+            'success_rate'  =>  $this->success_rate,
             'slug'          =>  $this->slug,
             'json'          =>  $this->json,
             'created_at'    =>  $this->created_at->formatLocalized('%A %d %B %Y'),

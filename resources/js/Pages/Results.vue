@@ -3,8 +3,8 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="row">
-          <div class="col-md-4">
-            <h2 class="pb-4">Results List of {{ $page.props.survey_name }}</h2>
+          <div class="col-md-12">
+            <h2 class="pb-4">Results List of "{{ $page.props.survey.name }}" survey</h2>
           </div>
         </div>
         <div class="">
@@ -14,20 +14,28 @@
                 <th scope="col">ID</th>
                 <th scope="col">IP Address</th>
                 <th scope="col">User</th>
+                <th scope="col">Correct Answers</th>
+                <th scope="col">Result</th>
                 <th scope="col">Created date</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="survey in results" :key="survey.id">
-                <td>{{ survey.id }}</td>
+              <tr v-for="result in results" :key="result.id">
+                <td>{{ result.id }}</td>
                 <td>
-                  {{ survey.ip_address }}
+                  {{ result.ip_address }}
                 </td>
                 <td>
-                  {{ survey.user.name }}
+                  {{ result.user.name }}
                 </td>
-                <td>{{ survey.created_at }}</td>
+                <td>
+                  {{ getCorrectAnswers(result) }} out of {{ countQuestions }}
+                </td>
+                <td :class="$page.props.survey.success_rate >answers[result.id] ? 'text-danger' : 'text-success'">
+                  {{  $page.props.survey.success_rate >answers[result.id] ? 'Failed' : 'Accepted' }}
+                </td>
+                <td>{{ result.created_at }}</td>
 
                 <td>
                   <div class="btn-group" role="group">
@@ -100,15 +108,20 @@
 
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
+import * as SurveyVue from "survey-vue";
+
 export default {
   name: "survey-list",
   components: { BootstrapAuthenticatedLayout },
   data() {
     return {
       results: [],
+      questions: {},
+      answers: {},
       page: 1,
+      countQuestions: 0,
       pageLength: 1,
-      dialog: false,
+      dialog: {},
       loading: false,
       formTitle: "New Survey",
       editedItem: {
@@ -118,6 +131,7 @@ export default {
   },
   mounted() {
     this.getResults();
+    this.getQuestions();
   },
   watch: {
     page() {
@@ -129,7 +143,12 @@ export default {
       this.loading = true;
 
       axios
-        .get("/api/survey/" + this.$page.props.survey_id + "/result?page=" + this.page)
+        .get(
+          "/api/survey/" +
+            this.$page.props.survey.id +
+            "/result?page=" +
+            this.page
+        )
         .then((response) => {
           this.results = response.data.data;
           this.survey = response.data.meta.survey;
@@ -137,8 +156,8 @@ export default {
             response.data.meta.total / response.data.meta.per_page
           );
           this.loading = false;
-          this.surveyData = new SurveyVue.Model(response.data.meta.survey.json);
-          this.surveyData.mode = "display";
+          //   this.surveyData = new SurveyVue.Model(response.data.meta.survey.json);
+          //   this.surveyData.mode = "display";
         })
         .catch((error) => {
           console.info(error.response);
@@ -160,6 +179,28 @@ export default {
     },
     runSurvey(slug) {
       window.open("/" + SurveyConfig.route_prefix + "/" + slug, "_blank");
+    },
+    getQuestions() {
+      const survey = this.$page.props.survey.json;
+      const self = this;
+      survey.pages.forEach((page) => {
+        page.elements.forEach((question) => {
+          self.questions[question.name] = question.correctAnswer;
+          self.countQuestions++;
+        });
+      });
+    },
+    getCorrectAnswers(survey) {
+      let count = 0;
+      const self = this;
+      for (const [key, value] of Object.entries(survey.json)) {
+          const questions_string = Array.isArray(self.questions[key]) && `${self.questions[key]}`;
+          const answer_string = Array.isArray(value) && `${value}`;
+          if (answer_string === questions_string) count++;
+
+      }
+      this.answers[survey.id] = count;
+      return count;
     },
   },
 };

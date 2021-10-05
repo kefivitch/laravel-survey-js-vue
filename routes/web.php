@@ -36,8 +36,7 @@ Route::get('/surveys', function () {
 Route::get('/surveys/{survey_id}/results', function ($survey_id) {
 
     return Inertia::render('Results', [
-        'survey_id' => $survey_id,
-        'survey_name' => Survey::find($survey_id)->name,
+        'survey' => Survey::findOrFail($survey_id),
     ]);
 })->middleware(['auth', 'verified'])->name('results');
 

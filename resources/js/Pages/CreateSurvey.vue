@@ -3,12 +3,12 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="row">
-          <div class="mb-3">
+          <div class="mb-3 col-sm-6">
             <label for="exampleInputSurvey" class="form-label"
               >Survey Name</label
             >
             <input
-              type="survey"
+              type="text"
               class="form-control"
               id="exampleInputSurvey"
               aria-describedby="surveyHelp"
@@ -16,6 +16,21 @@
             />
             <div id="surveyHelp" class="form-text">
               We'll use this name to list the surveys.
+            </div>
+          </div>
+          <div class="mb-3 col-sm-6">
+            <label for="exampleInputSurvey" class="form-label"
+              >Success Rate</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="exampleInputSurvey"
+              aria-describedby="surveyHelp"
+              v-model="successRate"
+            />
+            <div id="surveyHelp" class="form-text">
+              The number of correct answers allowed to pass the exam.
             </div>
           </div>
         </div>
@@ -44,6 +59,7 @@ export default {
     return {
       loading: false,
       name: "",
+      successRate: 0,
       json: {}
     };
   },
@@ -52,6 +68,7 @@ export default {
       this.loading = true;
       let data = {
         name: this.name,
+        success_rate: this.successRate,
         json: {
           pages: [],
         },
@@ -64,6 +81,9 @@ export default {
           this.$root.snackbarMsg = response.data.message;
           this.$root.snackbar = true;
           this.editedItem = Object.assign({}, { name: "" });
+        }
+        else {
+            alert('Error while creating the survey')
         }
       });
     },
