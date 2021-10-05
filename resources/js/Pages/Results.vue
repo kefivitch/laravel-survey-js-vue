@@ -50,15 +50,9 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <a class="dropdown-item" href="#">Run Survey</a>
-                      </li>
-                      <li>
                         <a class="dropdown-item" href="#">Get Results</a>
                       </li>
-                      <li>
-                        <a class="dropdown-item" href="#">Edit Survey</a>
-                      </li>
-                      <li>
+                      <li @click="deleteItem(result)">
                         <a class="dropdown-item bg-danger text-white" href="#"
                           >Delete Survey</a
                         >
@@ -165,16 +159,15 @@ export default {
         });
     },
     deleteItem(item) {
-      if (confirm("Are you sure you want to delete this survey?")) {
+      if (confirm("Are you sure you want to delete this survey result?")) {
         this.snackbar = true;
-        axios.delete("/survey/" + item.id).then((response) => {
+        axios.delete(`/api/survey/${this.$page.props.survey.id}/result/${item.id}`).then((response) => {
           if (response.status === 200) {
             this.$root.snackbarMsg = response.data.message;
             this.$root.snackbar = true;
           }
         });
-        const index = this.results.indexOf(item);
-        this.results.splice(index, 1);
+        this.getResults();
       }
     },
     runSurvey(slug) {

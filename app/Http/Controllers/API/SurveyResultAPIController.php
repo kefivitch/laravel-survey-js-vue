@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use App\Models\Survey;
 use App\Http\Resources\SurveyResource;
 use App\Http\Resources\SurveyResultResource;
+use App\Models\SurveyResult;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyResultAPIController extends Controller
@@ -43,5 +44,20 @@ class SurveyResultAPIController extends Controller
             'data'      =>  new SurveyResultResource($result),
             'message'   =>  'Survey Result successfully created',
         ], 201);
+    }
+
+    public function destroy($survey_id, $id)
+    {
+        $survey = SurveyResult::find($id);
+
+        if (is_null($survey)) {
+            return response()->json('Survey result not found', 404);
+        }
+        $survey->delete();
+
+        return response()->json([
+            'data' => $id,
+            'message' => 'Survey result deleted successfully',
+        ], 200);
     }
 }
