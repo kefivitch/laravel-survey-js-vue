@@ -55,6 +55,7 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Surveys</th>
                 <th scope="col">Created date</th>
                 <th scope="col">Actions</th>
               </tr>
@@ -64,7 +65,16 @@
                 <td>{{ user.id }}</td>
                 <td>
                   {{ user.name }}
-                  <small style="font-size: small">({{ user.slug }})</small>
+                </td>
+                <td>
+                  {{ user.surveys.length }} Surveys:
+                  <ul>
+                      <li v-for="survey in user.surveys" :key="survey.id">
+                      <a target="_blank" class="link-dark" style="text-decoration: none;" :href="route('survey', {survey_id: survey.id})" >
+                        {{survey.name}}
+                      </a>
+                      </li>
+                  </ul>
                 </td>
                 <td>{{ user.created_at }}</td>
 
@@ -178,8 +188,9 @@ export default {
     getUsers() {
       this.loading = true;
       axios
-        .get("api/user", {
+        .get("api/users", {
           params: {
+            include: 'surveys',
             page: this.page,
           },
         })

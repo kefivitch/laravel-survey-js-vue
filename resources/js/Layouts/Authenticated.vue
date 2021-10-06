@@ -20,6 +20,9 @@
                         <li class="nav-item">
                             <Link class="nav-link" :class="{ 'active': $page.url.endsWith('/create-survey') }" aria-current="page" :href="route('create-survey')">Create Survey</Link>
                         </li>
+                        <li class="nav-item">
+                            <Link class="nav-link" :class="{ 'active': $page.url.endsWith('/users') }" aria-current="page" :href="route('users')">Users List</Link>
+                        </li>
                     </ul>
 
                     <div class="d-flex">

@@ -75,12 +75,9 @@ Route::prefix('surveys')->middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::prefix('users')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/{survey_id}', function ($survey_id) {
-        return Inertia::render('Surveys/BuildSurvey', [
-            'survey' => Survey::findOrFail($survey_id),
-            'is_creator' => true,
-        ]);
-    })->name('survey');
+    Route::get('/', function () {
+        return Inertia::render('Users/Users');
+    })->name('users');
 });
 
 
