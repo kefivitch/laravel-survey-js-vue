@@ -7,9 +7,8 @@
 
 <script>
 import * as SurveyVue from "survey-vue";
-import "bootstrap/dist/css/bootstrap.css";
+import "survey-vue/survey.css";
 var Survey = SurveyVue.Survey;
-Survey.cssType = "bootstrap";
 Survey.mode = "display"
 
 import * as widgets from "surveyjs-widgets";

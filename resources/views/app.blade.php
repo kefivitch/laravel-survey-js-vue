@@ -10,11 +10,11 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
+        @routes
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->
-        @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
@@ -27,7 +27,7 @@
             window.SurveyConfig = {!! json_encode(config('survey-manager')) !!};
         </script>
         <script>
-            
+
           </script>
     </body>
 </html>

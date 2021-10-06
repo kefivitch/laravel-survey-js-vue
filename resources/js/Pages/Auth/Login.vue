@@ -23,7 +23,7 @@
         </div>
 
         <div class="float-end">
-            <Link v-if="canResetPassword" :href="'/forgot-password'" class="text-dark">Forgot your password?</Link>
+            <Link v-if="canResetPassword" :href="route('forgot-password')" class="text-dark">Forgot your password?</Link>
             <button type="submit" class="btn btn-dark ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Log in
             </button>

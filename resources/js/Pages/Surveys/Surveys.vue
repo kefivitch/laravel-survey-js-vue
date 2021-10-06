@@ -9,7 +9,7 @@
 
           <div class="col-md-2 ms-auto">
             <Link
-              href="/create-survey"
+              :href="route('create-survey')"
               as="button"
               type="button"
               class="btn btn-dark"
@@ -81,12 +81,12 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <a class="dropdown-item" target="_blank" :href="`/surveys/${survey.slug}/show`" >Run Survey</a>
+                        <a class="dropdown-item" target="_blank" :href="route('survey-show', {survey_slug: survey.slug})" >Run Survey</a>
                       </li>
                       <li>
                         <Link
                           class="dropdown-item"
-                          :href="`/surveys/${survey.id}/results`"
+                          :href="route('results', {survey_id: survey.id})"
                           >Show Results</Link
                         >
                         <!--<a class="" href="#">Get Results</a>-->
@@ -94,7 +94,7 @@
                       <li>
                         <Link
                           class="dropdown-item"
-                          :href="'/surveys/'+ survey.id"
+                          :href="route('survey', {survey_id: survey.id})"
                           >Edit Survey</Link
                         >
                       </li>
@@ -112,11 +112,11 @@
           <nav aria-label="Page navigation ">
             <ul class="pagination justify-content-end pt-2">
               <li
-                class="page-item"
+                class="page-item "
                 :class="page === 1 ? 'disabled' : ''"
                 @click="page > 1 && page--"
               >
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+                <a class="page-link " href="#" tabindex="-1" aria-disabled="true"
                   >Previous</a
                 >
               </li>

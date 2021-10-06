@@ -6,12 +6,12 @@
 
 <script>
 import * as SurveyVue from "survey-vue";
+import "survey-vue/survey.css";
 
 const Survey = SurveyVue.Survey;
 //SurveyVue.StylesManager.applyTheme("bootstrap");
 
 import * as widgets from "surveyjs-widgets";
-import { init as customWidget } from "../customwidget";
 
 // widgets.icheck(SurveyVue);
 widgets.select2(SurveyVue);
@@ -24,7 +24,6 @@ widgets.sortablejs(SurveyVue);
 widgets.ckeditor(SurveyVue);
 widgets.autocomplete(SurveyVue);
 widgets.bootstrapslider(SurveyVue);
-customWidget(SurveyVue);
 
 export default {
   components: {

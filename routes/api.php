@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;

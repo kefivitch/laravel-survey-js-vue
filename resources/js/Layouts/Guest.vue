@@ -4,7 +4,7 @@
             <div class="mt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <Link href="/">
+                        <Link :href="route('welcome')">
                             <breeze-application-logo style="width: 100px; height: 100px;" />
                         </Link>
                     </div>

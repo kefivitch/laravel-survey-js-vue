@@ -50,7 +50,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <Link class="dropdown-item" :href="`/surveys/${$page.props.survey.id}/results/${result.id}`">Get Results</Link>
+                        <Link class="dropdown-item" :href="route('show-survey-result', {survey_id:$page.props.survey.id, result_id: result.id})">Get Results</Link>
                       </li>
                       <li @click="deleteItem(result)">
                         <a class="dropdown-item bg-danger text-white" href="#"
@@ -82,7 +82,7 @@
                 :key="pagen"
                 @click="page = pagen"
               >
-                <a class="page-link" href="#">{{ pagen }}</a>
+                <a class="page-link " href="#">{{ pagen }}</a>
               </li>
               <li
                 class="page-item"

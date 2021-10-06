@@ -24,7 +24,7 @@
         </div>
 
         <div class="float-end">
-            <Link :href="'/login'" class="text-dark">Already registered?</Link>
+            <Link :href="route('login')" class="text-dark">Already registered?</Link>
             <button type="submit" class="btn btn-dark ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Register
             </button>

@@ -22,7 +22,7 @@ createInertiaApp({
       }).$mount(el)
     },
   })
-  
-Vue.prototype.$route = route
+
+Vue.prototype.route = route
 
 InertiaProgress.init({ color: '#4B5563' });

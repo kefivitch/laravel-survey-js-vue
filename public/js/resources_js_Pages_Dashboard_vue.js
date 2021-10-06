@@ -90,6 +90,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -465,6 +466,11 @@ var render = function() {
                       "li",
                       { staticClass: "nav-item" },
                       [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm.route("create-survey")) +
+                            "\n                        "
+                        ),
                         _c(
                           "Link",
                           {
@@ -474,7 +480,7 @@ var render = function() {
                             },
                             attrs: {
                               "aria-current": "page",
-                              href: "/create-survey"
+                              href: "/surveys/create-survey"
                             }
                           },
                           [_vm._v("Create Survey")]
