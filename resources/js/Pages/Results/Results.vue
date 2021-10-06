@@ -50,7 +50,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <a class="dropdown-item" href="#">Get Results</a>
+                        <Link class="dropdown-item" :href="`/surveys/${$page.props.survey.id}/results/${result.id}`">Get Results</Link>
                       </li>
                       <li @click="deleteItem(result)">
                         <a class="dropdown-item bg-danger text-white" href="#"
@@ -103,10 +103,10 @@
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
 import * as SurveyVue from "survey-vue";
-
+import { Link } from "@inertiajs/inertia-vue";
 export default {
   name: "survey-list",
-  components: { BootstrapAuthenticatedLayout },
+  components: { BootstrapAuthenticatedLayout,Link },
   data() {
     return {
       results: [],

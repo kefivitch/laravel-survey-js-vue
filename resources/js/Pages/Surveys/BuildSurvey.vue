@@ -6,7 +6,7 @@
 
 <script>
 import BootstrapAuthenticatedLayout from "@/Layouts/Authenticated";
-import SurveyCreator from "../components/SurveyCreator";
+import SurveyCreator from "@/components/Surveys/SurveyCreator";
 // import "bootstrap/dist/css/bootstrap.css";
 export default {
   components: {

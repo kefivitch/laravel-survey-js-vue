@@ -11,7 +11,7 @@ const Survey = SurveyVue.Survey;
 //SurveyVue.StylesManager.applyTheme("bootstrap");
 
 import * as widgets from "surveyjs-widgets";
-import { init as customWidget } from "./customwidget";
+import { init as customWidget } from "../customwidget";
 
 // widgets.icheck(SurveyVue);
 widgets.select2(SurveyVue);

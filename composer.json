@@ -12,6 +12,7 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
+        "tailflow/laravel-orion": "^2.1",
         "tightenco/ziggy": "^1.4"
     },
     "require-dev": {
