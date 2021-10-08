@@ -111,23 +111,9 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <a
-                          class="dropdown-item"
-                          target="_blank"
-                          :href="`/users/${user.slug}/show`"
-                          >Run User</a
-                        >
-                      </li>
-                      <li>
                         <Link
                           class="dropdown-item"
-                          :href="`/users/${user.id}/results`"
-                          >Show Results</Link
-                        >
-                        <!--<a class="" href="#">Get Results</a>-->
-                      </li>
-                      <li>
-                        <Link class="dropdown-item" :href="'/users/' + user.id"
+                          :href="route('edit-user', { user_id: user.id })"
                           >Edit User</Link
                         >
                       </li>
@@ -250,7 +236,7 @@ export default {
       if (confirm("Are you sure you want to delete this user?")) {
         axios.delete("/api/users/" + item.id).then((response) => {
           if (response.status === 200) {
-              self.msg = `User is deleted successfully`;
+            self.msg = `User is deleted successfully`;
             setTimeout(() => {
               self.msg = "";
             }, 3000);

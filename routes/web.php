@@ -2,6 +2,7 @@
 
 use App\Models\Survey;
 use App\Models\SurveyResult;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -84,6 +85,13 @@ Route::prefix('users')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/create', function () {
         return Inertia::render('Users/CreateUser');
     })->name('create-user');
+
+    /*** Edit user form ***/
+    Route::get('/edit/{user_id}', function ($user_id) {
+        return Inertia::render('Users/EditUser', [
+            "user" => User::findOrFail($user_id)
+        ]);
+    })->name('edit-user');
 });
 
 

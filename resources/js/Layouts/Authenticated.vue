@@ -34,6 +34,11 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li>
                                         <Link class="dropdown-item" :href="route('logout')" method="post">
+                                            Edit Profile
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link class="dropdown-item" :href="route('logout')" method="post">
                                             Log Out
                                         </Link>
                                     </li>

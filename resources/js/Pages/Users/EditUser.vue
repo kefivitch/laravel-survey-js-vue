@@ -39,15 +39,21 @@ export default {
     BreezeValidationErrors,
     UserForm,
   },
+  props: {
+      user: {
+          required: true,
+          type: Object
+      }
+  },
   data() {
     return {
       loading: false,
       form: this.$inertia.form({
-        name: "",
-        email: "",
+        name: this.user.name,
+        email: this.user.email,
         password: "",
         password_confirmation: "",
-        role: "",
+        role: this.user.role,
       }),
       errorMsg: [],
     };
@@ -57,13 +63,9 @@ export default {
       const self = this;
       this.loading = true;
       axios
-        .post("/api/users", this.form)
+        .put(`/api/users/${this.user.id}`, this.form)
         .then((response) => {
-          if (response.status === 201) {
-            //route.push("/users");
-            this.dialog = false;
-            this.loading = false;
-            this.$root.snackbarMsg = response.data.message;
+          if (response.status === 200) {
             window.location.replace(this.route("users"));
           } else {
             alert("Error while creating the survey");

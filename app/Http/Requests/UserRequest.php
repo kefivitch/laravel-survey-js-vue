@@ -16,4 +16,14 @@ class UserRequest extends Request
             'role' => 'required|in:admin,student,training_center',
         ];
     }
+
+    public function updateRules() : array
+    {
+        return [
+            'name' => 'required|string|max:191',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required',
+            'role' => 'required|in:admin,student,training_center',
+        ];
+    }
 }
