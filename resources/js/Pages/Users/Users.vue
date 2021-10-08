@@ -9,7 +9,7 @@
 
           <div class="col-md-2 ms-auto">
             <Link
-              href="/create-user"
+              :href="route('create-user')"
               as="button"
               type="button"
               class="btn btn-dark"
@@ -55,6 +55,7 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Role</th>
                 <th scope="col">Surveys</th>
                 <th scope="col">Created date</th>
                 <th scope="col">Actions</th>
@@ -65,6 +66,9 @@
                 <td>{{ user.id }}</td>
                 <td>
                   {{ user.name }}
+                </td>
+                <td>
+                  {{ roleRevolver(user.role) }}
                 </td>
                 <td>
                   {{ user.surveys.length }} Surveys:
@@ -179,12 +183,25 @@ export default {
   mounted() {
     this.getUsers();
   },
+  computed: {
+
+  },
   watch: {
     page() {
       this.getUsers();
     },
   },
   methods: {
+      roleRevolver(role) {
+        switch (role) {
+            case 'admin':
+                return 'Administrator'
+            case 'training_center':
+                return 'Training Center'
+            default:
+                return 'Student'
+        }
+    },
     getUsers() {
       this.loading = true;
       axios
@@ -209,7 +226,7 @@ export default {
         });
     },
     editItem(id) {
-      this.$router.push({ name: "editor", params: { id: id } });
+      this.router.push({ name: "editor", params: { id: id } });
     },
     deleteItem(item) {
       if (confirm("Are you sure you want to delete this user?")) {
@@ -252,7 +269,7 @@ export default {
       window.open("/" + UserConfig.route_prefix + "/" + slug, "_blank");
     },
     showResults(id) {
-      this.$router.push({ name: "result", params: { id: id } });
+      this.router.push({ name: "result", params: { id: id } });
     },
   },
 };

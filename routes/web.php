@@ -75,9 +75,15 @@ Route::prefix('surveys')->middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::prefix('users')->middleware(['auth', 'verified'])->group(function () {
+    /*** Users List ***/
     Route::get('/', function () {
         return Inertia::render('Users/Users');
     })->name('users');
+
+    /*** Create user form ***/
+    Route::get('/create', function () {
+        return Inertia::render('Users/CreateUser');
+    })->name('create-user');
 });
 
 

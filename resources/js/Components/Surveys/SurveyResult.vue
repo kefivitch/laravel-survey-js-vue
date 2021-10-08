@@ -78,7 +78,7 @@
                 survey: {},
                 dialog: false,
                 surveyData: {},
-                surveyId: this.$route.params.id,
+                surveyId: this.route.params.id,
                 page: 1,
                 pageLength: 1,
                 headers: [
@@ -107,7 +107,7 @@
             }
         },
         mounted () {
-            this.getSurveyResults(this.$route.params.id);
+            this.getSurveyResults(this.route.params.id);
         },
         watch: {
             page() {

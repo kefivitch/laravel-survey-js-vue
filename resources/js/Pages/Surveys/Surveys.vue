@@ -198,7 +198,7 @@ export default {
         });
     },
     editItem(id) {
-      this.$router.push({ name: "editor", params: { id: id } });
+      this.router.push({ name: "editor", params: { id: id } });
     },
     deleteItem(item) {
       if (confirm("Are you sure you want to delete this survey?")) {
@@ -241,7 +241,7 @@ export default {
       window.open("/" + SurveyConfig.route_prefix + "/" + slug, "_blank");
     },
     showResults(id) {
-      this.$router.push({ name: "result", params: { id: id } });
+      this.router.push({ name: "result", params: { id: id } });
     },
   },
 };

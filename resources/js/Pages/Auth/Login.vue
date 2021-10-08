@@ -23,7 +23,7 @@
         </div>
 
         <div class="float-end">
-            <Link v-if="canResetPassword" :href="route('forgot-password')" class="text-dark">Forgot your password?</Link>
+            <Link v-if="canResetPassword" :href="route('password.request')" class="text-dark">Forgot your password?</Link>
             <button type="submit" class="btn btn-dark ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Log in
             </button>
@@ -63,7 +63,7 @@
 
         methods: {
             submit() {
-                this.form.post(this.$route('login'), {
+                this.form.post(this.route('login'), {
                     onFinish: () => this.form.reset('password'),
                 })
             }
