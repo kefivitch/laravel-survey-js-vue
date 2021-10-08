@@ -14,9 +14,20 @@
               type="button"
               class="btn btn-dark"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-plus-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                />
               </svg>
               Create new User
             </Link>
@@ -73,11 +84,16 @@
                 <td>
                   {{ user.surveys.length }} Surveys:
                   <ul>
-                      <li v-for="survey in user.surveys" :key="survey.id">
-                      <a target="_blank" class="link-dark" style="text-decoration: none;" :href="route('survey', {survey_id: survey.id})" >
-                        {{survey.name}}
+                    <li v-for="survey in user.surveys" :key="survey.id">
+                      <a
+                        target="_blank"
+                        class="link-dark"
+                        style="text-decoration: none"
+                        :href="route('survey', { survey_id: survey.id })"
+                      >
+                        {{ survey.name }}
                       </a>
-                      </li>
+                    </li>
                   </ul>
                 </td>
                 <td>{{ user.created_at }}</td>
@@ -95,7 +111,12 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <li>
-                        <a class="dropdown-item" target="_blank" :href="`/users/${user.slug}/show`" >Run User</a>
+                        <a
+                          class="dropdown-item"
+                          target="_blank"
+                          :href="`/users/${user.slug}/show`"
+                          >Run User</a
+                        >
                       </li>
                       <li>
                         <Link
@@ -106,9 +127,7 @@
                         <!--<a class="" href="#">Get Results</a>-->
                       </li>
                       <li>
-                        <Link
-                          class="dropdown-item"
-                          :href="'/users/'+ user.id"
+                        <Link class="dropdown-item" :href="'/users/' + user.id"
                           >Edit User</Link
                         >
                       </li>
@@ -183,31 +202,29 @@ export default {
   mounted() {
     this.getUsers();
   },
-  computed: {
-
-  },
+  computed: {},
   watch: {
     page() {
       this.getUsers();
     },
   },
   methods: {
-      roleRevolver(role) {
-        switch (role) {
-            case 'admin':
-                return 'Administrator'
-            case 'training_center':
-                return 'Training Center'
-            default:
-                return 'Student'
-        }
+    roleRevolver(role) {
+      switch (role) {
+        case "admin":
+          return "Administrator";
+        case "training_center":
+          return "Training Center";
+        default:
+          return "Student";
+      }
     },
     getUsers() {
       this.loading = true;
       axios
         .get("api/users", {
           params: {
-            include: 'surveys',
+            include: "surveys",
             page: this.page,
           },
         })
@@ -229,47 +246,18 @@ export default {
       this.router.push({ name: "editor", params: { id: id } });
     },
     deleteItem(item) {
+      const self = this;
       if (confirm("Are you sure you want to delete this user?")) {
-        this.snackbar = true;
-        axios.delete("/api/user/" + item.id).then((response) => {
+        axios.delete("/api/users/" + item.id).then((response) => {
           if (response.status === 200) {
-            this.msg = response.data.message;
+              self.msg = `User is deleted successfully`;
             setTimeout(() => {
-              this.msg = "";
+              self.msg = "";
             }, 3000);
             this.getUsers();
           }
         });
       }
-    },
-    onCloseModal() {
-      this.dialog = false;
-      this.editedItem = Object.assign({}, { name: "" });
-    },
-    onSaveModal(name) {
-      this.loading = true;
-      let data = {
-        name: name,
-        json: {
-          pages: [],
-        },
-      };
-      axios.post("/user", data).then((response) => {
-        if (response.status === 201) {
-          this.dialog = false;
-          this.loading = false;
-          this.$root.snackbarMsg = response.data.message;
-          this.$root.snackbar = true;
-          this.editedItem = Object.assign({}, { name: "" });
-          this.getUsers();
-        }
-      });
-    },
-    runUser(slug) {
-      window.open("/" + UserConfig.route_prefix + "/" + slug, "_blank");
-    },
-    showResults(id) {
-      this.router.push({ name: "result", params: { id: id } });
     },
   },
 };
