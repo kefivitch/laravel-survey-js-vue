@@ -98,25 +98,25 @@ Route::prefix('surveys')->middleware(['auth', 'verified'])->group(function () {
 Route::prefix('users')->middleware(['auth', 'verified'])->group(function () {
     /*** Users List ***/
     Route::get('/', function () {
+        if(Auth::user()->role !='admin') abort(401);
         return Inertia::render('Users/Users');
     })->name('users');
 
     /*** Create user form ***/
     Route::get('/create', function () {
+        if(Auth::user()->role !='admin') abort(401);
         return Inertia::render('Users/CreateUser');
     })->name('create-user');
 
     /*** Edit user form ***/
     Route::get('/edit/{user_id}', function ($user_id) {
+        if(Auth::user()->role != 'admin' && Auth::user()->id != $user_id) abort(401);
         return Inertia::render('Users/EditUser', [
             "user" => User::findOrFail($user_id)
         ]);
     })->name('edit-user');
 });
 
-Route::prefix('api')->middleware(['auth', 'verified'])->group(function () {
-
-});
 
 Route::group(
     [

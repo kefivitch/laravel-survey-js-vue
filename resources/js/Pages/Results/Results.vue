@@ -33,7 +33,7 @@
                   {{ getCorrectAnswers(result) }} out of {{ countQuestions }}
                 </td>
                 <td :class="$page.props.survey.success_rate >answers[result.id] ? 'text-danger' : 'text-success'">
-                  {{  $page.props.survey.success_rate >answers[result.id] ? 'Failed' : 'Accepted' }}
+                  {{  $page.props.survey.success_rate >answers[result.id] ? 'Rejected' : 'Accepted' }}
                 </td>
                 <td>{{ result.created_at }}</td>
 

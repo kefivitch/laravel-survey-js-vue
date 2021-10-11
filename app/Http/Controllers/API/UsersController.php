@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -14,7 +15,10 @@ use Orion\Http\Requests\Request;
 class UsersController extends Controller
 {
 
-    use DisableAuthorization;
+    public function resolveUser()
+    {
+        return Auth::guard('web')->user();
+    }
 
     protected $model = User::class;
 

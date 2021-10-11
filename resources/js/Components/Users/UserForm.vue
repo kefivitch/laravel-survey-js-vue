@@ -10,7 +10,7 @@
         v-model="form.name"
       />
     </div>
-    <div class="mb-3 col-sm-6">
+    <div class="mb-3 " :class="this.$page.props.auth.user.role == 'admin' ? 'col-sm-6' : 'col-sm-12'">
       <label for="email" class="form-label">Email</label>
       <input
         type="email"
@@ -20,9 +20,10 @@
         v-model="form.email"
       />
     </div>
-    <div class="mb-3 col-sm-6">
+    <div class="mb-3 col-sm-6"  v-if="this.$page.props.auth.user.role == 'admin'">
       <label for="role" class="form-label">Role</label>
       <select
+
         class="form-select"
         v-model="form.role"
         aria-label="Default select example"

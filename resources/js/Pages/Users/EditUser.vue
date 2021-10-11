@@ -10,6 +10,9 @@
             </li>
           </ul>
         </div>
+        <div class="alert alert-success" role="alert" v-if="c">
+          The profile is up to date !
+        </div>
 
         <form @submit.prevent="submit">
           <user-form :form.sync="form"/>
@@ -55,8 +58,12 @@ export default {
         password_confirmation: "",
         role: this.user.role,
       }),
+      c: false,
       errorMsg: [],
     };
+  },
+  mounted() {
+      this.confirmMessage()
   },
   methods: {
     submit() {
@@ -66,24 +73,32 @@ export default {
         .put(`/api/users/${this.user.id}`, this.form)
         .then((response) => {
           if (response.status === 200) {
-            window.location.replace(this.route("users"));
+              //console.log(self.$page.props.auth.user.role)
+            if(self.$page.props.auth.user.role != "admin") {
+                window.location.replace(this.route("edit-user", {user_id: self.$page.props.auth.user.id})+"?c=true");
+            } else {
+                window.location.replace(this.route("users"));
+            }
           } else {
-            alert("Error while creating the survey");
+            alert("Error while updating the user");
           }
         })
         .catch((error) => {
-          console.log("error", error.response.data.errors);
+          console.log("error", error);
           for (const errorField in error.response.data.errors) {
             self.errorMsg.push(`${error.response.data.errors[errorField][0]}`);
           }
           self.loading = false;
         });
     },
-    // submit() {
-    //   this.form.post('/api/users', {
-    // onFinish: () => this.route.push({name: "users"}),
-    //   });
-    // },
+    confirmMessage() {
+      const url = window.location.search
+      const query = new URLSearchParams(url);
+
+      this.c = query.has('c');
+
+      setTimeout(() => this.c = false, 3000)
+    },
   },
 };
 </script>
