@@ -49,6 +49,8 @@ class SurveyResultAPIController extends Controller
     public function destroy($survey_id, $id)
     {
         $survey = SurveyResult::find($id);
+        
+        if(Auth::user()->id != $survey->survey->user_id || Auth::user()->role =="student") abort(401);
 
         if (is_null($survey)) {
             return response()->json('Survey result not found', 404);
