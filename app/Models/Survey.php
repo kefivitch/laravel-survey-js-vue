@@ -14,7 +14,7 @@ class Survey extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name', 'slug', 'json', 'success_rate'
+        'name', 'slug', 'json', 'success_rate', 'user_id'
     ];
 
     protected $casts = [

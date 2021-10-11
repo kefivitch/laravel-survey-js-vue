@@ -14,17 +14,16 @@
                         <li class="nav-item">
                             <Link class="nav-link" :class="{ 'active': $page.url.endsWith('dashboard') }" aria-current="page" :href="route('dashboard')">Dashboard</Link>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="$page.props.auth.user.role != 'student'">
                             <Link class="nav-link" :class="{ 'active': $page.url.endsWith('surveys') }" aria-current="page" :href="route('surveys')">Surveys List</Link>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="$page.props.auth.user.role != 'student'">
                             <Link class="nav-link" :class="{ 'active': $page.url.endsWith('/create-survey') }" aria-current="page" :href="route('create-survey')">Create Survey</Link>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="$page.props.auth.user.role == 'admin'">
                             <Link class="nav-link" :class="{ 'active': $page.url.endsWith('/users') }" aria-current="page" :href="route('users')">Users List</Link>
                         </li>
                     </ul>
-
                     <div class="d-flex">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item dropdown">
@@ -33,7 +32,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li>
-                                        <Link class="dropdown-item" :href="route('logout')" method="post">
+                                        <Link class="dropdown-item" :href="route('edit-user', {user_id:  $page.props.auth.user.id})">
                                             Edit Profile
                                         </Link>
                                     </li>

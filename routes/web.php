@@ -4,8 +4,10 @@ use App\Models\Survey;
 use App\Models\SurveyResult;
 use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Orion\Facades\Orion;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +35,17 @@ Route::get('/dashboard', function () {
 Route::prefix('surveys')->middleware(['auth', 'verified'])->group(function () {
     /*** Surveys List ***/
     Route::get('/', function () {
+        if (Auth::user()->role == "student"){
+            abort(401);
+        }
         return Inertia::render('Surveys/Surveys');
     })->name('surveys');
 
     /*** Create Survey #1 form ***/
     Route::get('/create-survey', function () {
+        if (Auth::user()->role == "student"){
+            abort(401);
+        }
         return Inertia::render('Surveys/CreateSurvey');
     })->name('create-survey');
 
@@ -51,7 +59,9 @@ Route::prefix('surveys')->middleware(['auth', 'verified'])->group(function () {
 
     /*** Get all results for specific survey ***/
     Route::get('/{survey_id}/results', function ($survey_id) {
-
+        if (Auth::user()->role == "student"){
+            abort(401);
+        }
         return Inertia::render('Results/Results', [
             'survey' => Survey::findOrFail($survey_id),
         ]);
@@ -59,16 +69,26 @@ Route::prefix('surveys')->middleware(['auth', 'verified'])->group(function () {
 
     /*** Get specific result for specific survey ***/
     Route::get('/{survey_id}/results/{result_id}', function ($survey_id, $result_id) {
+        $survey = Survey::findOrFail($survey_id);
+        if (Auth::user()->id != $survey->user_id){
+            abort(401);
+        }
         return Inertia::render('Results/SurveyResult', [
-            'survey' => Survey::findOrFail($survey_id),
+            'survey' => $survey,
             'result' => SurveyResult::findOrFail($result_id)
         ]);
     })->name('show-survey-result');
 
     /*** Survey Builder ***/
     Route::get('/{survey_id}', function ($survey_id) {
+        $survey = Survey::findOrFail($survey_id);
+
+        if (Auth::user()->role != "admin" && $survey->user_id != Auth::user()->id){
+            abort(401);
+        }
+
         return Inertia::render('Surveys/BuildSurvey', [
-            'survey' => Survey::findOrFail($survey_id),
+            'survey' => $survey,
             'is_creator' => true,
         ]);
     })->name('survey');
@@ -94,5 +114,26 @@ Route::prefix('users')->middleware(['auth', 'verified'])->group(function () {
     })->name('edit-user');
 });
 
+Route::prefix('api')->middleware(['auth', 'verified'])->group(function () {
+
+});
+
+Route::group(
+    [
+        'prefix'     =>  'api',
+        'namespace'     =>  'App\Http\Controllers\API',
+        'middleware'    =>  ['auth', 'verified'],
+    ],
+    function () {
+
+        Route::resource('/survey', 'SurveyAPIController', ['only' => [
+            'index', 'store', 'update', 'destroy', 'show',
+        ]]);
+
+        Route::resource('/survey/{survey}/result', 'SurveyResultAPIController');
+
+        Orion::resource('users', UsersController::class);
+    }
+);
 
 require __DIR__ . '/auth.php';

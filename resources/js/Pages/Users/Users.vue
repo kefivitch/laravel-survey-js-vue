@@ -208,7 +208,7 @@ export default {
     getUsers() {
       this.loading = true;
       axios
-        .get("api/users", {
+        .get("/api/users", {
           params: {
             include: "surveys",
             page: this.page,

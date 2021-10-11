@@ -67,11 +67,12 @@ export default {
       let data = {
         name: this.name,
         success_rate: this.successRate,
+        user_id: this.$page.props.auth.user.id,
         json: {
           pages: [],
         },
       };
-      axios.post("api/survey", data).then((response) => {
+      axios.post("/api/survey", data).then((response) => {
         if (response.status === 201) {
           window.location.replace('/surveys/' + response.data.data.id);
           this.dialog = false;

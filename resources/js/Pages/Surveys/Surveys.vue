@@ -178,7 +178,7 @@ export default {
     getSurveys() {
       this.loading = true;
       axios
-        .get("api/survey", {
+        .get("/api/survey", {
           params: {
             page: this.page,
           },
